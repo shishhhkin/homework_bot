@@ -55,13 +55,21 @@ def send_message(bot, message):
         bot.send_message(TELEGRAM_CHAT_ID, message)
         logger.debug(f'Отправлено сообщение "{message}"')
     except ApiTelegramException as e:
-        raise MessageSendingError(f"Ошибка API Telegram: {e}")
+        raise MessageSendingError(
+            f"Ошибка API Telegram: {e}"
+        )
     except requests.exceptions.ConnectionError:
-        raise MessageSendingError("Ошибка сети: проверьте подключение к интернету.")
+        raise MessageSendingError(
+            "Ошибка сети: проверьте подключение к интернету."
+        )
     except requests.exceptions.Timeout:
-        raise MessageSendingError("Превышено время ожидания ответа от сервера.")
+        raise MessageSendingError(
+            "Превышено время ожидания ответа от сервера."
+        )
     except Exception as e:
-        raise MessageSendingError(f"Произошла непредвиденная ошибка: {e}")
+        raise MessageSendingError(
+            f"Произошла непредвиденная ошибка: {e}"
+        )
 
 
 def get_api_answer(timestamp: int) -> dict:
