@@ -110,24 +110,26 @@ def check_response(response: dict):
             f'Ответ от Yandex API не словарь, а {type(response)}'
         )
 
-    if response.get('homeworks') is None:
+    homeworks = response.get('homeworks')
+
+    if homeworks is None:
         raise ResponseError('В ответе от Yandex API нет записей о ДЗ')
 
     if response.get('current_date') is None:
         raise ResponseError('В ответе от Yandex API нет записи о текущей дате')
 
-    if not isinstance(response.get('homeworks'), list):
+    if not isinstance(homeworks, list):
         raise TypeError(
             'В ответе от Yandex API записи о ДЗ не приведены к списку'
         )
 
-    if len(response.get('homeworks')) < 1:
+    if len(homeworks) < 1:
         raise ResponseError(
             'В ответе от Yandex API список с записями о ДЗ пуст'
         )
 
 
-def parse_status(homework: dict):
+def parse_status(homework: dict) -> str:
     """Извлекает из записи о домашней работе её статус.
 
     Args:
